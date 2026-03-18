@@ -263,6 +263,17 @@ body::before {
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
 }
+.home-link {
+  position: absolute;
+  top: 1.8rem; left: 2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.home-link:hover { color: var(--green); }
 
 /* ── SPARKLES ── */
 .sparkle {
@@ -315,7 +326,7 @@ body::before {
 
   <!-- Skip -->
   <button class="skip-btn" onclick="skipToEnd()">skip intro →</button>
-
+    <a href="index.html" class="home-link">← Home</a>
   <!-- ══ SCENE 0 ══ -->
   <div class="scene active" id="scene-0">
     <div class="char-wrap">
