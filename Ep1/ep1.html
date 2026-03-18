@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Div Guy — Hello World!</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Syne:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0d0f;
+  --green: #00ff9d;
+  --green2: #00cc7a;
+  --blue: #00cfff;
+  --yellow: #ffe234;
+  --white: #f0f4f8;
+  --muted: #4a5568;
+  --card: #12181f;
+  --border: rgba(0,255,157,0.15);
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'JetBrains Mono', monospace;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Grid bg */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,255,157,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,157,0.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── STAGE ── */
+.stage {
+  position: relative;
+  width: 100vw; height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* ── EPISODE BADGE ── */
+.ep-badge {
+  position: absolute;
+  top: 1.8rem; left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--green);
+  border: 1px solid var(--border);
+  padding: 0.4rem 1.2rem;
+  border-radius: 100px;
+  background: rgba(0,255,157,0.05);
+  animation: fadeIn 0.5s 0.3s both;
+}
+
+/* ── PROGRESS DOTS ── */
+.progress-dots {
+  position: absolute;
+  bottom: 2rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 0.5rem;
+  animation: fadeIn 0.5s 0.5s both;
+}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: all 0.4s ease;
+}
+.dot.active { background: var(--green); transform: scale(1.4); }
+.dot.done   { background: var(--green2); }
+
+/* ── SKIP ── */
+.skip-btn {
+  position: absolute;
+  bottom: 1.8rem; right: 2rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.2s;
+  animation: fadeIn 0.5s 1s both;
+  background: none; border: none;
+}
+.skip-btn:hover { color: var(--white); }
+
+/* ── SCENE WRAPPER ── */
+.scene {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: sceneIn 0.5s cubic-bezier(0.34,1.4,0.64,1) both;
+  position: relative;
+}
+.scene.active { display: flex; }
+
+@keyframes sceneIn {
+  from { opacity: 0; transform: scale(0.94) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── CHARACTER ── */
+.char-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+.char-img {
+  width: clamp(160px, 22vw, 260px);
+  animation: bob 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(0,255,157,0.18)) drop-shadow(0 16px 40px rgba(0,0,0,0.6));
+  position: relative;
+  z-index: 1;
+}
+@keyframes bob {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* ── SPEECH BUBBLE ── */
+.bubble {
+  position: relative;
+  background: var(--card);
+  border: 1.5px solid var(--green);
+  border-radius: 14px 14px 14px 14px;
+  padding: 1rem 1.4rem;
+  max-width: 300px;
+  min-width: 220px;
+  margin-bottom: 18px;
+  box-shadow: 0 0 24px rgba(0,255,157,0.18), 0 8px 32px rgba(0,0,0,0.5);
+  animation: bubblePop 0.45s cubic-bezier(0.34,1.56,0.64,1) both;
+  transform-origin: bottom center;
+  z-index: 2;
+}
+/* Arrow pointing DOWN toward the character */
+.bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 12px solid var(--green);
+}
+.bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--card);
+  z-index: 1;
+}
+@keyframes bubblePop {
+  from { opacity: 0; transform: scale(0.5) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.bubble-inner {
+  font-size: clamp(0.72rem, 1.2vw, 0.85rem);
+  line-height: 1.65;
+  color: var(--white);
+}
+.bubble-inner .hi     { color: var(--yellow); font-size: 1.1em; }
+.bubble-inner .green  { color: var(--green); font-weight: 700; }
+.bubble-inner .blue   { color: var(--blue); }
+.bubble-inner .emoji  { font-size: 1.1em; }
+.cursor-blink {
+  display: inline-block;
+  width: 2px; height: 0.85em;
+  background: var(--green);
+  vertical-align: middle;
+  margin-left: 1px;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── CAPTION (below character) ── */
+.caption {
+  margin-top: 1.8rem;
+  text-align: center;
+  font-size: clamp(0.7rem, 1.5vw, 0.82rem);
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  animation: fadeIn 0.5s 0.6s both;
+}
+
+/* ── NEXT BUTTON ── */
+.next-btn {
+  margin-top: 1.5rem;
+  padding: 0.7rem 2rem;
+  background: var(--green);
+  color: var(--bg);
+  border: none;
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  animation: fadeIn 0.4s 0.8s both;
+}
+.next-btn:hover { background: var(--green2); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,255,157,0.3); }
+
+/* ── FINAL SCENE EXTRAS ── */
+.final-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1.2rem;
+  animation: fadeIn 0.5s 1s both;
+}
+.pill {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--green);
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(0,255,157,0.04);
+}
+.pill:hover { background: rgba(0,255,157,0.12); border-color: var(--green); }
+
+/* ── GLOW RING ── */
+.glow-ring {
+  position: fixed;
+  width: clamp(260px, 36vw, 420px);
+  height: clamp(260px, 36vw, 420px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,157,0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ── SPARKLES ── */
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 1rem;
+  animation: sparkle-float 3s ease-in-out infinite;
+  opacity: 0.6;
+}
+@keyframes sparkle-float {
+  0%,100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+  50%      { transform: translateY(-18px) rotate(20deg); opacity: 0.8; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+
+/* ── REPLAY ── */
+.replay-btn {
+  margin-top: 0.6rem;
+  background: none;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+  animation: fadeIn 0.4s 1.2s both;
+}
+.replay-btn:hover { color: var(--white); border-color: var(--white); }
+
+@media (max-width: 520px) {
+  .bubble { right: -10px; max-width: 200px; min-width: 160px; }
+  .char-img { width: 180px; }
+}
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <div class="ep-badge">✦ Episode 01 — Hello World</div>
+
+  <!-- Progress dots -->
+  <div class="progress-dots" id="dots"></div>
+
+  <!-- Skip -->
+  <button class="skip-btn" onclick="skipToEnd()">skip intro →</button>
+
+  <!-- ══ SCENE 0 ══ -->
+  <div class="scene active" id="scene-0">
+    <div class="char-wrap">
+      <div class="bubble">
+        <div class="bubble-inner">
+          <span class="hi">👋 Hey there!</span><br>
+          I'm <span class="green">The Div Guy.</span><br>
+          Nice to meet you!<span class="cursor-blink"></span>
+        </div>
+      </div>
+      <img src="Stickman.png" class="char-img" alt="The Div Guy" />
+    </div>
+    <div class="caption">// tap to continue</div>
+    <button class="next-btn" onclick="next()">Next →</button>
+  </div>
+
+  <!-- ══ SCENE 1 ══ -->
+  <div class="scene" id="scene-1">
+    <div class="char-wrap">
+      <div class="bubble">
+        <div class="bubble-inner">
+          I'm brand new here —<br>
+          this is my <span class="green">very first</span><br>
+          post! <span class="emoji">🎉</span><span class="cursor-blink"></span>
+        </div>
+      </div>
+      <img src="Stickman.png" class="char-img" alt="The Div Guy" />
+    </div>
+    <div class="caption">// scene 2 of 6</div>
+    <button class="next-btn" onclick="next()">Next →</button>
+  </div>
+
+  <!-- ══ SCENE 2 ══ -->
+  <div class="scene" id="scene-2">
+    <div class="char-wrap">
+      <div class="bubble">
+        <div class="bubble-inner">
+          I'll be uploading<br>
+          <span class="green">interactive</span> webpages<br>
+          that actually <span class="blue">move</span><br>
+          and respond. <span class="emoji">⚡</span><span class="cursor-blink"></span>
+        </div>
+      </div>
+      <img src="Stickman.png" class="char-img" alt="The Div Guy" />
+    </div>
+    <div class="caption">// scene 3 of 6</div>
+    <button class="next-btn" onclick="next()">Next →</button>
+  </div>
+
+  <!-- ══ SCENE 3 ══ -->
+  <div class="scene" id="scene-3">
+    <div class="char-wrap">
+      <div class="bubble">
+        <div class="bubble-inner">
+          Responsive designs,<br>
+          cool <span class="green">CSS styles</span>,<br>
+          animations — all<br>
+          the good stuff. <span class="emoji">😎</span><span class="cursor-blink"></span>
+        </div>
+      </div>
+      <img src="Stickman.png" class="char-img" alt="The Div Guy" />
+    </div>
+    <div class="caption">// scene 4 of 6</div>
+    <button class="next-btn" onclick="next()">Next →</button>
+  </div>
+
+  <!-- ══ SCENE 4 ══ -->
+  <div class="scene" id="scene-4">
+    <div class="char-wrap">
+      <div class="bubble">
+        <div class="bubble-inner">
+          I'll teach you<br>
+          <span class="green">HTML</span>, <span class="blue">CSS</span>,<br>
+          <span class="green">JS</span> and more —<br>
+          step by step. <span class="emoji">🚀</span><span class="cursor-blink"></span>
+        </div>
+      </div>
+      <img src="Stickman.png" class="char-img" alt="The Div Guy" />
+    </div>
+    <div class="caption">// scene 5 of 6</div>
+    <button class="next-btn" onclick="next()">Next →</button>
+  </div>
+
+  <!-- ══ SCENE 5 — FINAL ══ -->
+  <div class="scene" id="scene-5">
+    <div class="char-wrap">
+      <div class="bubble" style="border-color: var(--yellow);">
+        <div class="bubble-inner">
+          Stick around —<br>
+          <span class="green">great stuff</span> is<br>
+          coming your way.<br>
+          Let's build! <span class="emoji">🛠️</span><span class="cursor-blink"></span>
+        </div>
+      </div>
+      <img src="Stickman.png" class="char-img" alt="The Div Guy"
+        style="filter: drop-shadow(0 0 40px rgba(255,226,52,0.25)) drop-shadow(0 16px 40px rgba(0,0,0,0.6));" />
+    </div>
+    <div class="final-links">
+      <span class="pill">🌐 HTML</span>
+      <span class="pill">🎨 CSS</span>
+      <span class="pill">⚡ JavaScript</span>
+      <span class="pill">📱 Responsive</span>
+    </div>
+    <button class="replay-btn" onclick="replay()">↺ Watch Again</button>
+  </div>
+
+</div><!-- /stage -->
+
+<script>
+  const TOTAL = 6;
+  let current = 0;
+
+  // Build dots
+  const dotsEl = document.getElementById('dots');
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.id = 'dot-' + i;
+    dotsEl.appendChild(d);
+  }
+
+  function updateDots() {
+    for (let i = 0; i < TOTAL; i++) {
+      const d = document.getElementById('dot-' + i);
+      d.className = 'dot' + (i < current ? ' done' : i === current ? ' active' : '');
+    }
+  }
+
+  function next() {
+    if (current >= TOTAL - 1) return;
+    document.getElementById('scene-' + current).classList.remove('active');
+    current++;
+    const nextScene = document.getElementById('scene-' + current);
+    nextScene.classList.add('active');
+    // re-trigger animation
+    nextScene.style.animation = 'none';
+    void nextScene.offsetWidth;
+    nextScene.style.animation = '';
+    updateDots();
+  }
+
+  function skipToEnd() {
+    document.getElementById('scene-' + current).classList.remove('active');
+    current = TOTAL - 1;
+    document.getElementById('scene-' + current).classList.add('active');
+    updateDots();
+  }
+
+  function replay() {
+    document.getElementById('scene-' + current).classList.remove('active');
+    current = 0;
+    document.getElementById('scene-0').classList.add('active');
+    updateDots();
+  }
+
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') next();
+  });
+</script>
+</body>
+</html>
