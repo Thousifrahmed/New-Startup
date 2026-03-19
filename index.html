@@ -3,840 +3,550 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Div Guy — Learn to Code, The Cool Way</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Syne:wght@400;700;800;900&family=Syne+Mono&display=swap" rel="stylesheet">
+<title>The Div Guy — Build Cool Stuff</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0a0d0f;
-  --bg2: #0f1318;
-  --green: #00ff9d;
-  --green2: #00cc7a;
-  --blue: #00cfff;
-  --yellow: #ffe234;
-  --white: #f0f4f8;
-  --muted: #4a5568;
-  --card: #12181f;
-  --border: rgba(0,255,157,0.12);
+  --bg:      #080b0e;
+  --bg2:     #0d1117;
+  --green:   #00ff9d;
+  --green2:  #00cc7a;
+  --blue:    #38bdf8;
+  --pink:    #f472b6;
+  --yellow:  #fbbf24;
+  --white:   #f1f5f9;
+  --muted:   #475569;
+  --card:    #0f1923;
+  --border:  rgba(0,255,157,0.1);
 }
 
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--white);
-  font-family: 'Syne', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   overflow-x: hidden;
-  cursor: none;
 }
 
-/* Custom cursor */
-.cursor {
-  width: 12px; height: 12px;
-  background: var(--green);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.15s ease;
-  mix-blend-mode: difference;
-}
-.cursor-ring {
-  width: 36px; height: 36px;
-  border: 1px solid var(--green);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  transition: all 0.1s ease;
-  opacity: 0.5;
-}
-
-/* Grid background */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    linear-gradient(rgba(0,255,157,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,157,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Scanline effect */
 body::after {
   content: '';
   position: fixed; inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.03) 2px,
-    rgba(0,0,0,0.03) 4px
-  );
-  pointer-events: none;
-  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 999;
 }
 
-/* ══ NAV ══ */
+/* ── NAV ── */
 nav {
-  position: fixed; top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 2.5rem;
-  background: rgba(10,13,15,0.85);
-  backdrop-filter: blur(12px);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 3rem;
+  background: rgba(8,11,14,0.85);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
 }
-.nav-logo {
+.logo {
   font-family: 'JetBrains Mono', monospace;
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: var(--green);
-  letter-spacing: -0.02em;
+  font-weight: 800; font-size: 1rem;
+  color: var(--white); text-decoration: none;
 }
-.nav-logo span { color: var(--white); }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
+.logo span { color: var(--green); }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
 .nav-links a {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--muted);
-  text-decoration: none;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: color 0.2s;
+  font-size: 0.7rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+  text-decoration: none; transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--green); }
-.nav-cta {
+.nav-ep1 {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
   padding: 0.5rem 1.2rem;
-  background: transparent;
-  border: 1px solid var(--green);
-  color: var(--green);
-  border-radius: 2px;
-  cursor: none;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: all 0.2s;
+  border: 1px solid var(--green); color: var(--green);
+  background: transparent; border-radius: 3px;
+  text-decoration: none; transition: all 0.2s;
 }
-.nav-cta:hover { background: var(--green); color: var(--bg); }
+.nav-ep1:hover { background: var(--green); color: var(--bg); }
 
-/* ══ HERO ══ */
+/* ── HERO ── */
 .hero {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 2rem;
-  padding: 7rem 5vw 4rem;
-  position: relative;
-  z-index: 2;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 3rem;
+  padding: 8rem 3rem 4rem;
+  position: relative; overflow: hidden;
 }
-
-.hero-text { max-width: 560px; }
-
-.hero-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--green);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-.hero-tag::before {
+.hero::before {
   content: '';
-  display: inline-block;
-  width: 20px; height: 2px;
-  background: var(--green);
+  position: absolute; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,255,157,0.06) 0%, transparent 65%);
+  top: -100px; left: -100px; border-radius: 50%;
+  animation: orbDrift 10s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(56,189,248,0.05) 0%, transparent 65%);
+  bottom: -100px; right: 0; border-radius: 50%;
+  animation: orbDrift 13s ease-in-out infinite alternate-reverse;
+  pointer-events: none;
+}
+@keyframes orbDrift {
+  from { transform: translate(0,0); }
+  to   { transform: translate(40px,30px); }
 }
 
-h1 {
-  font-size: clamp(2.8rem, 5.5vw, 5rem);
-  font-weight: 900;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+.hero-left { position: relative; z-index: 2; }
+
+.hero-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 0.7rem;
+  animation: fadeUp 0.6s 0.1s both;
+}
+.hero-kicker::before { content: ''; width: 24px; height: 2px; background: var(--green); display: inline-block; }
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 8vw, 7.5rem);
+  line-height: 0.9; letter-spacing: 0.01em;
   margin-bottom: 1.5rem;
+  animation: fadeUp 0.6s 0.2s both;
 }
-h1 .accent { color: var(--green); }
-h1 .line2 { 
-  -webkit-text-stroke: 1px rgba(240,244,248,0.4);
-  color: transparent;
-}
+.hero-title .line-white  { color: var(--white); }
+.hero-title .line-green  { color: var(--green); }
+.hero-title .line-outline { -webkit-text-stroke: 2px rgba(241,245,249,0.2); color: transparent; }
 
 .hero-desc {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: rgba(240,244,248,0.55);
-  margin-bottom: 2.5rem;
-  max-width: 420px;
+  font-size: 1rem; line-height: 1.75;
+  color: rgba(241,245,249,0.5);
+  max-width: 440px; margin-bottom: 2.5rem;
+  animation: fadeUp 0.6s 0.35s both;
 }
+.hero-desc strong { color: var(--white); font-weight: 500; }
 
-.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-.btn-primary {
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.5s both; }
+.btn-main {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
-  padding: 0.9rem 2rem;
-  background: var(--green);
-  color: var(--bg);
-  border: none;
-  border-radius: 2px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: none;
-  transition: all 0.2s;
-  text-decoration: none;
-  display: inline-block;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.9rem 2.2rem; background: var(--green); color: var(--bg);
+  border: none; border-radius: 3px; text-decoration: none;
+  display: inline-block; transition: all 0.2s; cursor: pointer;
 }
-.btn-primary:hover { background: var(--green2); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,255,157,0.25); }
-.btn-ghost {
+.btn-main:hover { background: var(--green2); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,255,157,0.3); }
+.btn-outline {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
-  padding: 0.9rem 2rem;
-  background: transparent;
-  color: var(--white);
-  border: 1px solid rgba(240,244,248,0.15);
-  border-radius: 2px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  cursor: none;
-  transition: all 0.2s;
-  text-decoration: none;
-  display: inline-block;
+  font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.9rem 2.2rem; background: transparent; color: var(--white);
+  border: 1px solid rgba(241,245,249,0.15); border-radius: 3px;
+  text-decoration: none; display: inline-block; transition: all 0.2s;
 }
-.btn-ghost:hover { border-color: var(--white); }
+.btn-outline:hover { border-color: var(--white); }
 
-/* ══ STICKMAN STAGE ══ */
-.hero-stage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  min-height: 480px;
+/* ── HERO RIGHT ── */
+.hero-right {
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 2;
+  animation: fadeUp 0.7s 0.3s both;
 }
-
-.stage-glow {
-  position: absolute;
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(0,255,157,0.08) 0%, transparent 70%);
-  border-radius: 50%;
+.char-stage { position: relative; display: inline-block; }
+.char-glow {
+  position: absolute; inset: -40px;
+  background: radial-gradient(circle, rgba(0,255,157,0.1) 0%, transparent 65%);
+  border-radius: 50%; pointer-events: none;
+  animation: glowPulse 3s ease-in-out infinite;
 }
-
-.stickman-wrap {
-  position: relative;
+@keyframes glowPulse {
+  0%,100% { opacity: 0.6; transform: scale(0.95); }
+  50%      { opacity: 1;   transform: scale(1.05); }
+}
+.char-img {
+  width: clamp(240px, 30vw, 380px);
   animation: float 4s ease-in-out infinite;
-  z-index: 2;
+  filter: drop-shadow(0 20px 50px rgba(0,0,0,0.7));
+  position: relative; z-index: 1;
 }
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-14px); }
-}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
 
-.stickman-img {
-  width: 340px;
-  max-width: 90vw;
-  filter: drop-shadow(0 0 30px rgba(0,255,157,0.2)) drop-shadow(0 20px 40px rgba(0,0,0,0.5));
-  animation: glow-pulse 3s ease-in-out infinite;
-}
-@keyframes glow-pulse {
-  0%, 100% { filter: drop-shadow(0 0 20px rgba(0,255,157,0.15)) drop-shadow(0 20px 40px rgba(0,0,0,0.5)); }
-  50% { filter: drop-shadow(0 0 40px rgba(0,255,157,0.35)) drop-shadow(0 20px 40px rgba(0,0,0,0.5)); }
-}
-
-/* ══ SPEECH BUBBLE ══ */
-.speech-bubble {
+.chip {
   position: absolute;
-  top: -20px;
-  right: -30px;
-  background: var(--card);
-  border: 1px solid var(--green);
-  border-radius: 12px 12px 12px 0;
-  padding: 0.9rem 1.1rem;
-  max-width: 220px;
-  box-shadow: 0 0 20px rgba(0,255,157,0.15), 0 8px 30px rgba(0,0,0,0.4);
-  animation: bubble-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  z-index: 10;
-}
-.speech-bubble::before {
-  content: '';
-  position: absolute;
-  bottom: -10px; left: 14px;
-  border-left: 10px solid transparent;
-  border-right: 0px solid transparent;
-  border-top: 10px solid var(--green);
-}
-.speech-bubble::after {
-  content: '';
-  position: absolute;
-  bottom: -8px; left: 15px;
-  border-left: 9px solid transparent;
-  border-right: 0px solid transparent;
-  border-top: 9px solid var(--card);
-}
-
-@keyframes bubble-in {
-  from { opacity: 0; transform: scale(0.7) translateY(10px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.bubble-text {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  line-height: 1.5;
-  color: var(--white);
-}
-.bubble-text .highlight { color: var(--green); font-weight: 700; }
-.bubble-text .code-inline {
-  background: rgba(0,255,157,0.1);
-  color: var(--green);
-  padding: 0.1rem 0.3rem;
-  border-radius: 3px;
-  font-size: 0.72rem;
-}
-.bubble-cursor {
-  display: inline-block;
-  width: 2px; height: 12px;
-  background: var(--green);
-  margin-left: 2px;
-  vertical-align: middle;
-  animation: blink 1s step-end infinite;
-}
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-/* ══ FLOATING CODE TAGS ══ */
-.float-tag {
-  position: absolute;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: rgba(0,255,157,0.4);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+  padding: 0.3rem 0.7rem; border-radius: 4px;
+  white-space: nowrap; animation: chipFloat 5s ease-in-out infinite;
   pointer-events: none;
-  animation: drift 8s ease-in-out infinite;
 }
-.float-tag:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
-.float-tag:nth-child(2) { top: 70%; left: 2%; animation-delay: 2s; }
-.float-tag:nth-child(3) { top: 30%; right: 3%; animation-delay: 1s; }
-.float-tag:nth-child(4) { top: 80%; right: 5%; animation-delay: 3s; }
-@keyframes drift {
-  0%, 100% { transform: translateY(0) rotate(-2deg); opacity: 0.3; }
-  50% { transform: translateY(-20px) rotate(2deg); opacity: 0.6; }
-}
-
-/* ══ STATS BAR ══ */
-.stats-bar {
-  position: relative; z-index: 2;
-  display: flex;
-  justify-content: center;
-  gap: 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: rgba(0,255,157,0.02);
-  padding: 1.8rem 2rem;
-  flex-wrap: wrap;
-}
-.stat-item {
-  text-align: center;
-  padding: 0 3rem;
-  border-right: 1px solid var(--border);
-}
-.stat-item:last-child { border-right: none; }
-.stat-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--green);
-  display: block;
-  line-height: 1;
-  margin-bottom: 0.3rem;
-}
-.stat-label {
-  font-size: 0.72rem;
-  color: var(--muted);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+.chip-1 { top:8%;  left:-18%; background:rgba(0,255,157,0.1); border:1px solid rgba(0,255,157,0.25); color:var(--green); animation-delay:0s; }
+.chip-2 { top:22%; right:-16%;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.25);color:var(--blue);  animation-delay:1.2s;}
+.chip-3 { bottom:28%;left:-20%;background:rgba(244,114,182,0.1);border:1px solid rgba(244,114,182,0.25);color:var(--pink);animation-delay:0.6s;}
+.chip-4 { bottom:10%;right:-18%;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.25);color:var(--yellow);animation-delay:1.8s;}
+@keyframes chipFloat {
+  0%,100% { transform:translateY(0) rotate(-1deg); }
+  50%      { transform:translateY(-10px) rotate(1deg); }
 }
 
-/* ══ TOPICS SECTION ══ */
-.section {
-  position: relative; z-index: 2;
-  padding: 6rem 5vw;
-}
-.section-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 3rem;
-  gap: 1rem;
-}
-.section-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--green);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-h2 {
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-
-.topics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-}
-.topic-card {
-  background: var(--card);
-  padding: 2rem;
-  cursor: none;
-  transition: all 0.25s ease;
-  position: relative;
+/* ── TICKER ── */
+.ticker-wrap {
   overflow: hidden;
-}
-.topic-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0,255,157,0.05) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.topic-card:hover { background: #161e27; }
-.topic-card:hover::before { opacity: 1; }
-.topic-card:hover .topic-icon { transform: scale(1.1) rotate(-5deg); }
-
-.topic-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--muted);
-  margin-bottom: 1rem;
-  letter-spacing: 0.15em;
-}
-.topic-icon {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  display: block;
-  transition: transform 0.3s;
-}
-.topic-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.topic-desc {
-  font-size: 0.85rem;
-  color: rgba(240,244,248,0.45);
-  line-height: 1.6;
-  margin-bottom: 1.2rem;
-}
-.topic-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 2px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.tag-beginner { background: rgba(0,255,157,0.1); color: var(--green); }
-.tag-inter    { background: rgba(0,207,255,0.1); color: var(--blue); }
-.tag-coming   { background: rgba(74,85,104,0.3); color: var(--muted); }
-
-/* ══ HOW IT WORKS ══ */
-.how-section {
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  background: rgba(0,255,157,0.02); padding: 0.9rem 0;
   position: relative; z-index: 2;
-  padding: 5rem 5vw;
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
 }
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+.ticker { display:flex; gap:3rem; animation:ticker 25s linear infinite; white-space:nowrap; width:max-content; }
+.ticker-item {
+  font-family:'JetBrains Mono',monospace; font-size:0.7rem;
+  letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);
+  display:flex; align-items:center; gap:0.8rem;
 }
-.step {
-  text-align: center;
-  padding: 2rem 1.5rem;
-  position: relative;
+.ticker-item span { color: var(--green); }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── SECTIONS ── */
+.section { padding: 6rem 3rem; position: relative; z-index: 2; }
+.sec-label {
+  font-family:'JetBrains Mono',monospace; font-size:0.68rem;
+  letter-spacing:0.25em; text-transform:uppercase; color:var(--green); margin-bottom:0.6rem;
 }
-.step-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: rgba(0,255,157,0.08);
-  display: block;
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-.step-icon { font-size: 1.8rem; margin-bottom: 0.8rem; display: block; }
-.step-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
-.step-desc { font-size: 0.85rem; color: rgba(240,244,248,0.45); line-height: 1.6; }
-.step-arrow {
-  position: absolute;
-  right: -1rem; top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  font-size: 1.2rem;
+.sec-title {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.5rem,5vw,4.5rem); line-height:1;
+  margin-bottom:3.5rem; letter-spacing:0.02em;
 }
 
-/* ══ CTA SECTION ══ */
+/* ── CATEGORY CARDS ── */
+.cat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem; }
+.cat-card {
+  background:var(--card); border:1px solid rgba(255,255,255,0.05);
+  border-radius:8px; padding:2rem; transition:all 0.3s ease;
+  position:relative; overflow:hidden; cursor:default;
+}
+.cat-card::before {
+  content:''; position:absolute; top:0; left:0; right:0;
+  height:2px; transition:opacity 0.3s; opacity:0;
+}
+.cat-card:hover { transform:translateY(-4px); border-color:rgba(255,255,255,0.1); }
+.cat-card:hover::before { opacity:1; }
+.cat-card.c-green::before { background:var(--green); }
+.cat-card.c-blue::before  { background:var(--blue); }
+.cat-card.c-pink::before  { background:var(--pink); }
+.cat-card.c-yellow::before{ background:var(--yellow); }
+.cat-card.c-green:hover { box-shadow:0 20px 40px rgba(0,255,157,0.08); }
+.cat-card.c-blue:hover  { box-shadow:0 20px 40px rgba(56,189,248,0.08); }
+.cat-card.c-pink:hover  { box-shadow:0 20px 40px rgba(244,114,182,0.08); }
+.cat-card.c-yellow:hover{ box-shadow:0 20px 40px rgba(251,191,36,0.08); }
+.cat-icon { font-size:2rem; margin-bottom:1rem; display:block; }
+.cat-title { font-family:'JetBrains Mono',monospace; font-size:0.9rem; font-weight:700; margin-bottom:0.6rem; }
+.cat-desc  { font-size:0.875rem; line-height:1.65; color:rgba(241,245,249,0.45); margin-bottom:1.2rem; }
+.cat-tags  { display:flex; flex-wrap:wrap; gap:0.4rem; }
+.ctag { font-family:'JetBrains Mono',monospace; font-size:0.58rem; letter-spacing:0.1em; padding:0.2rem 0.55rem; border-radius:3px; }
+.ctag-g { background:rgba(0,255,157,0.1);   color:var(--green); }
+.ctag-b { background:rgba(56,189,248,0.1);  color:var(--blue); }
+.ctag-p { background:rgba(244,114,182,0.1); color:var(--pink); }
+.ctag-y { background:rgba(251,191,36,0.1);  color:var(--yellow); }
+
+/* ── EPISODES ── */
+.episodes-section {
+  padding:5rem 3rem; background:var(--bg2);
+  border-top:1px solid var(--border); position:relative; z-index:2;
+}
+.ep-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; margin-top:3rem; }
+.ep-card {
+  background:var(--card); border:1px solid rgba(255,255,255,0.05);
+  border-radius:6px; padding:1.5rem; text-decoration:none; color:inherit;
+  transition:all 0.25s; display:block; position:relative;
+}
+.ep-card:hover { border-color:var(--green); transform:translateY(-3px); }
+.ep-card.locked { opacity:0.4; cursor:default; pointer-events:none; }
+.ep-num  { font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; color:var(--muted); margin-bottom:0.5rem; }
+.ep-title{ font-family:'JetBrains Mono',monospace; font-size:0.82rem; font-weight:700; margin-bottom:0.4rem; line-height:1.4; }
+.ep-desc { font-size:0.78rem; color:rgba(241,245,249,0.4); line-height:1.5; }
+.ep-badge-live {
+  position:absolute; top:1rem; right:1rem;
+  font-family:'JetBrains Mono',monospace; font-size:0.55rem; letter-spacing:0.12em;
+  padding:0.2rem 0.5rem; border-radius:3px;
+  background:rgba(0,255,157,0.15); color:var(--green); text-transform:uppercase;
+}
+.ep-badge-soon {
+  position:absolute; top:1rem; right:1rem;
+  font-family:'JetBrains Mono',monospace; font-size:0.55rem; letter-spacing:0.12em;
+  padding:0.2rem 0.5rem; border-radius:3px;
+  background:rgba(71,85,105,0.3); color:var(--muted); text-transform:uppercase;
+}
+
+/* ── MEET ── */
+.meet-section {
+  padding:6rem 3rem; display:grid; grid-template-columns:1fr 1fr;
+  gap:4rem; align-items:center; position:relative; z-index:2;
+}
+.meet-img-wrap { text-align:center; }
+.meet-img {
+  width:clamp(200px,25vw,320px);
+  filter:drop-shadow(0 0 40px rgba(0,255,157,0.15));
+  animation:float 4s ease-in-out infinite;
+}
+.meet-desc { font-size:1rem; line-height:1.8; color:rgba(241,245,249,0.5); margin-bottom:2rem; }
+.meet-desc strong { color:var(--white); }
+.meet-stats { display:flex; gap:2.5rem; flex-wrap:wrap; }
+.meet-stat-num  { font-family:'Bebas Neue',sans-serif; font-size:3rem; color:var(--green); display:block; line-height:1; }
+.meet-stat-label{ font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); }
+
+/* ── CTA ── */
 .cta-section {
-  position: relative; z-index: 2;
-  padding: 7rem 5vw;
-  text-align: center;
-  overflow: hidden;
+  padding:7rem 3rem; text-align:center;
+  border-top:1px solid var(--border); position:relative; z-index:2; overflow:hidden;
 }
 .cta-glow {
-  position: absolute;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(0,255,157,0.06) 0%, transparent 70%);
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:600px; height:300px;
+  background:radial-gradient(ellipse, rgba(0,255,157,0.06) 0%, transparent 70%);
+  pointer-events:none;
 }
-.cta-section h2 { margin-bottom: 1rem; }
-.cta-section p { color: rgba(240,244,248,0.5); margin-bottom: 2.5rem; font-size: 1.05rem; max-width: 450px; margin-left: auto; margin-right: auto; }
+.cta-section p { color:rgba(241,245,249,0.45); font-size:1rem; max-width:400px; margin:0 auto 2.5rem; line-height:1.7; }
 
-/* ══ FOOTER ══ */
+/* ── FOOTER ── */
 footer {
-  position: relative; z-index: 2;
-  border-top: 1px solid var(--border);
-  padding: 2rem 5vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
+  border-top:1px solid var(--border); padding:2rem 3rem;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:1rem; position:relative; z-index:2;
 }
-.footer-logo {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--green);
-}
-.footer-copy {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--muted);
-  letter-spacing: 0.1em;
-}
+.footer-logo  { font-family:'JetBrains Mono',monospace; font-size:0.85rem; font-weight:700; color:var(--green); }
+.footer-note  { font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.1em; color:var(--muted); }
 
-/* ══ TYPING ANIMATION ══ */
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+.fade-up { opacity:0; transform:translateY(28px); transition:opacity 0.6s ease,transform 0.6s ease; }
+.fade-up.visible { opacity:1; transform:translateY(0); }
 
-/* ══ ENTRANCE ANIMATIONS ══ */
-.fade-up {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Staggered hero text */
-.hero-tag   { animation: fadeUp 0.6s 0.1s both; }
-h1          { animation: fadeUp 0.6s 0.25s both; }
-.hero-desc  { animation: fadeUp 0.6s 0.4s both; }
-.hero-btns  { animation: fadeUp 0.6s 0.55s both; }
-.hero-stage { animation: fadeUp 0.7s 0.3s both; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ══ RESPONSIVE ══ */
-@media (max-width: 768px) {
-  .hero {
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding-top: 6rem;
-  }
-  .hero-stage { order: -1; min-height: 300px; }
-  .hero-desc { margin-left: auto; margin-right: auto; }
-  .hero-btns { justify-content: center; }
-  .hero-tag { justify-content: center; }
-  .stat-item { padding: 1rem; border-right: none; border-bottom: 1px solid var(--border); width: 50%; }
-  .speech-bubble { right: -10px; top: -30px; max-width: 180px; }
-  .stickman-img { width: 240px; }
-  nav { padding: 1rem 1.2rem; }
-  .nav-links { display: none; }
-  .step-arrow { display: none; }
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero { grid-template-columns:1fr; text-align:center; padding:7rem 1.5rem 4rem; }
+  .hero-right { order:-1; }
+  .hero-kicker,.hero-actions { justify-content:center; }
+  .hero-desc { margin-left:auto; margin-right:auto; }
+  .meet-section { grid-template-columns:1fr; text-align:center; }
+  .meet-stats { justify-content:center; }
+  nav { padding:1rem 1.5rem; }
+  .nav-links { display:none; }
+  .chip { display:none; }
+  .section,.episodes-section,.cta-section { padding:4rem 1.5rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- Custom cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- Floating code tags in background -->
-<div class="float-tag">&lt;div&gt;</div>
-<div class="float-tag">console.log()</div>
-<div class="float-tag">{ css }</div>
-<div class="float-tag">fn() =&gt; {}</div>
-
-<!-- ── NAV ── -->
 <nav>
-  <div class="nav-logo">&lt;<span>DivGuy</span> /&gt;</div>
+  <a href="thedivguy.html" class="logo">&lt;<span>TheDiv</span>Guy&gt;</a>
   <ul class="nav-links">
-    <li><a href="#topics">Topics</a></li>
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#start">Start</a></li>
+    <li><a href="#build">What We Build</a></li>
+    <li><a href="#episodes">Episodes</a></li>
+    <li><a href="#meet">The Character</a></li>
   </ul>
-  <button class="nav-cta">Start Learning</button>
+  <a href="divguy-intro.html" class="nav-ep1">▶ Watch Ep. 01</a>
 </nav>
 
-<!-- ── HERO ── -->
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-text">
-    <div class="hero-tag">// Your coolest coding tutor</div>
-    <h1>
-      Learn to<br>
-      <span class="accent">Code.</span><br>
-      <span class="line2">No fluff.</span>
+  <div class="hero-left">
+    <div class="hero-kicker">// The Div Guy is here</div>
+    <h1 class="hero-title">
+      <span class="line-white">BUILD</span><br>
+      <span class="line-green">COOL</span><br>
+      <span class="line-outline">STUFF.</span>
     </h1>
     <p class="hero-desc">
-      The Div Guy breaks down web dev concepts — HTML, CSS, JavaScript and more —
-      with zero boring lectures and maximum swagger. 😎
+      No boring tutorials. Just <strong>shortcuts, interactive UIs, login pages,
+      animations</strong> and real things you actually want to build —
+      taught through interactive webpages.
     </p>
-    <div class="hero-btns">
-      <a href="ep1.html" class="btn-primary">Start Learning →</a>
-      <a href="#how" class="btn-ghost">See How It Works</a>
+    <div class="hero-actions">
+      <a href="#episodes" class="btn-main">Browse Episodes →</a>
+      <a href="divguy-intro.html" class="btn-outline">▶ Meet The Div Guy</a>
     </div>
   </div>
 
-  <div class="hero-stage">
-    <div class="stage-glow"></div>
-
-    <div class="stickman-wrap">
-      <!-- Speech bubble cycles through messages -->
-      <div class="speech-bubble" id="bubble">
-        <div class="bubble-text" id="bubbleText">
-          Hey! I'm <span class="highlight">The Div Guy</span>.<br>Let's learn to code! 🚀<span class="bubble-cursor"></span>
-        </div>
-      </div>
-      <img src="insta 2.png" alt="The Div Guy" class="stickman-img" />
+  <div class="hero-right">
+    <div class="char-stage">
+      <div class="char-glow"></div>
+      <span class="chip chip-1">⌨️ Ctrl+Shift+C</span>
+      <span class="chip chip-2">&lt;login /&gt;</span>
+      <span class="chip chip-3">@keyframes 💅</span>
+      <span class="chip chip-4">responsive ✓</span>
+      <img src="insta_2.png" alt="The Div Guy" class="char-img" />
     </div>
   </div>
 </section>
 
-<!-- ── STATS ── -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <span class="stat-num" data-target="10">0</span>
-    <span class="stat-label">Topics Coming</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num" data-target="100">0</span>
-    <span class="stat-label">% Free</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num" data-target="0">0</span>
-    <span class="stat-label">Boring Lectures</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">∞</span>
-    <span class="stat-label">Cool Factor</span>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item"><span>✦</span> Interactive Webpages</div>
+    <div class="ticker-item"><span>✦</span> Login Pages</div>
+    <div class="ticker-item"><span>✦</span> CSS Animations</div>
+    <div class="ticker-item"><span>✦</span> Code Shortcuts</div>
+    <div class="ticker-item"><span>✦</span> Responsive Design</div>
+    <div class="ticker-item"><span>✦</span> Cool UI Components</div>
+    <div class="ticker-item"><span>✦</span> JavaScript Tricks</div>
+    <div class="ticker-item"><span>✦</span> Dark Mode Styles</div>
+    <div class="ticker-item"><span>✦</span> Interactive Webpages</div>
+    <div class="ticker-item"><span>✦</span> Login Pages</div>
+    <div class="ticker-item"><span>✦</span> CSS Animations</div>
+    <div class="ticker-item"><span>✦</span> Code Shortcuts</div>
+    <div class="ticker-item"><span>✦</span> Responsive Design</div>
+    <div class="ticker-item"><span>✦</span> Cool UI Components</div>
+    <div class="ticker-item"><span>✦</span> JavaScript Tricks</div>
+    <div class="ticker-item"><span>✦</span> Dark Mode Styles</div>
   </div>
 </div>
 
-<!-- ── TOPICS ── -->
-<section class="section" id="topics">
-  <div class="section-header">
-    <div>
-      <div class="section-tag">// what you'll learn</div>
-      <h2>Pick Your Topic,<br>The Div Guy's Got You.</h2>
+<!-- WHAT WE BUILD -->
+<section class="section" id="build">
+  <div class="sec-label">// what we build here</div>
+  <h2 class="sec-title">Real Things.<br>Not Textbook Stuff.</h2>
+  <div class="cat-grid">
+    <div class="cat-card c-green fade-up">
+      <span class="cat-icon">⚡</span>
+      <div class="cat-title">Code Shortcuts</div>
+      <div class="cat-desc">The tricks pros use every day. Write 10x faster, look 10x cooler doing it.</div>
+      <div class="cat-tags"><span class="ctag ctag-g">VS Code</span><span class="ctag ctag-g">Emmet</span><span class="ctag ctag-g">Snippets</span></div>
     </div>
-  </div>
-
-  <div class="topics-grid">
-    <div class="topic-card fade-up">
-      <div class="topic-num">01 //</div>
-      <span class="topic-icon">🌐</span>
-      <div class="topic-title">HTML Basics</div>
-      <div class="topic-desc">Tags, structure, and why everything is a box. Your first step into the web.</div>
-      <span class="topic-tag tag-beginner">Beginner</span>
+    <div class="cat-card c-blue fade-up">
+      <span class="cat-icon">🔐</span>
+      <div class="cat-title">Login & Auth Pages</div>
+      <div class="cat-desc">Beautiful sign-in forms, animated inputs, validation — the kind you actually want to use.</div>
+      <div class="cat-tags"><span class="ctag ctag-b">HTML</span><span class="ctag ctag-b">CSS</span><span class="ctag ctag-b">JavaScript</span></div>
     </div>
-    <div class="topic-card fade-up">
-      <div class="topic-num">02 //</div>
-      <span class="topic-icon">🎨</span>
-      <div class="topic-title">CSS Magic</div>
-      <div class="topic-desc">Make things look good. Colors, layouts, animations — the art side of code.</div>
-      <span class="topic-tag tag-beginner">Beginner</span>
+    <div class="cat-card c-pink fade-up">
+      <span class="cat-icon">🎨</span>
+      <div class="cat-title">Interactive UI</div>
+      <div class="cat-desc">Hover effects, modals, dropdowns, sliders — components that feel alive when you touch them.</div>
+      <div class="cat-tags"><span class="ctag ctag-p">Animations</span><span class="ctag ctag-p">CSS Magic</span></div>
     </div>
-    <div class="topic-card fade-up">
-      <div class="topic-num">03 //</div>
-      <span class="topic-icon">⚡</span>
-      <div class="topic-title">JavaScript</div>
-      <div class="topic-desc">Make your pages actually DO stuff. Variables, functions, and logic.</div>
-      <span class="topic-tag tag-inter">Intermediate</span>
+    <div class="cat-card c-yellow fade-up">
+      <span class="cat-icon">📱</span>
+      <div class="cat-title">Responsive Styles</div>
+      <div class="cat-desc">Pages that look great on phone, tablet AND desktop — without pulling your hair out.</div>
+      <div class="cat-tags"><span class="ctag ctag-y">Flexbox</span><span class="ctag ctag-y">Grid</span><span class="ctag ctag-y">Media Queries</span></div>
     </div>
-    <div class="topic-card fade-up">
-      <div class="topic-num">04 //</div>
-      <span class="topic-icon">📦</span>
-      <div class="topic-title">Flexbox & Grid</div>
-      <div class="topic-desc">Stop fighting layouts. The Div Guy will show you exactly how it works.</div>
-      <span class="topic-tag tag-beginner">Beginner</span>
+    <div class="cat-card c-green fade-up">
+      <span class="cat-icon">✨</span>
+      <div class="cat-title">CSS Animations</div>
+      <div class="cat-desc">Keyframes, transitions, scroll effects — make your pages move in ways that impress.</div>
+      <div class="cat-tags"><span class="ctag ctag-g">@keyframes</span><span class="ctag ctag-g">Transitions</span></div>
     </div>
-    <div class="topic-card fade-up">
-      <div class="topic-num">05 //</div>
-      <span class="topic-icon">🔗</span>
-      <div class="topic-title">How the Internet Works</div>
-      <div class="topic-desc">Servers, browsers, DNS — the invisible stuff that runs the web.</div>
-      <span class="topic-tag tag-beginner">Beginner</span>
-    </div>
-    <div class="topic-card fade-up">
-      <div class="topic-num">06 //</div>
-      <span class="topic-icon">🛠️</span>
-      <div class="topic-title">Your Custom Topics</div>
-      <div class="topic-desc">Got something specific in mind? The Div Guy covers what YOU want to learn.</div>
-      <span class="topic-tag tag-coming">Coming Soon</span>
+    <div class="cat-card c-blue fade-up">
+      <span class="cat-icon">🛠️</span>
+      <div class="cat-title">Custom Projects</div>
+      <div class="cat-desc">Dashboards, landing pages, portfolio sections — full builds from scratch, step by step.</div>
+      <div class="cat-tags"><span class="ctag ctag-b">Full Build</span><span class="ctag ctag-b">From Scratch</span></div>
     </div>
   </div>
 </section>
 
-<!-- ── HOW IT WORKS ── -->
-<div class="how-section" id="how">
-  <div class="section-tag" style="text-align:center; margin-bottom:0.5rem;">// the process</div>
-  <h2 style="text-align:center;">How The Div Guy Teaches</h2>
-  <div class="steps">
-    <div class="step fade-up">
-      <span class="step-num">01</span>
-      <span class="step-icon">👆</span>
-      <div class="step-title">Pick a Topic</div>
-      <div class="step-desc">Choose what you want to learn from the topic list above.</div>
-      <span class="step-arrow">→</span>
+<!-- EPISODES -->
+<section class="episodes-section" id="episodes">
+  <div class="sec-label">// all episodes</div>
+  <h2 class="sec-title">The Collection.</h2>
+  <div class="ep-grid">
+    <a href="divguy-intro.html" class="ep-card">
+      <div class="ep-badge-live">● Live</div>
+      <div class="ep-num">EP // 01</div>
+      <div class="ep-title">Hello World 👋</div>
+      <div class="ep-desc">Meet The Div Guy. This is where it all starts.</div>
+    </a>
+    <div class="ep-card locked">
+      <div class="ep-badge-soon">Soon</div>
+      <div class="ep-num">EP // 02</div>
+      <div class="ep-title">Coming Soon...</div>
+      <div class="ep-desc">Next episode drops soon. Stay tuned.</div>
     </div>
-    <div class="step fade-up">
-      <span class="step-num">02</span>
-      <span class="step-icon">🧑‍💻</span>
-      <div class="step-title">Watch & Read</div>
-      <div class="step-desc">The Div Guy explains with animations and speech bubbles — no voice needed.</div>
-      <span class="step-arrow">→</span>
+    <div class="ep-card locked">
+      <div class="ep-badge-soon">Soon</div>
+      <div class="ep-num">EP // 03</div>
+      <div class="ep-title">Coming Soon...</div>
+      <div class="ep-desc">Next episode drops soon. Stay tuned.</div>
     </div>
-    <div class="step fade-up">
-      <span class="step-num">03</span>
-      <span class="step-icon">💡</span>
-      <div class="step-title">Understand It</div>
-      <div class="step-desc">Concepts are broken into tiny, digestible steps with live code examples.</div>
-      <span class="step-arrow">→</span>
+    <div class="ep-card locked">
+      <div class="ep-badge-soon">Soon</div>
+      <div class="ep-num">EP // 04</div>
+      <div class="ep-title">Coming Soon...</div>
+      <div class="ep-desc">Next episode drops soon. Stay tuned.</div>
     </div>
-    <div class="step fade-up">
-      <span class="step-num">04</span>
-      <span class="step-icon">🚀</span>
-      <div class="step-title">Build Stuff</div>
-      <div class="step-desc">Apply what you learned. Projects. Code. The real thing.</div>
+    <div class="ep-card locked">
+      <div class="ep-badge-soon">Soon</div>
+      <div class="ep-num">EP // 05</div>
+      <div class="ep-title">Coming Soon...</div>
+      <div class="ep-desc">Next episode drops soon. Stay tuned.</div>
+    </div>
+    <div class="ep-card locked">
+      <div class="ep-badge-soon">Soon</div>
+      <div class="ep-num">EP // 06</div>
+      <div class="ep-title">Coming Soon...</div>
+      <div class="ep-desc">Next episode drops soon. Stay tuned.</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ── CTA ── -->
-<section class="cta-section" id="start">
+<!-- MEET -->
+<section class="meet-section" id="meet">
+  <div class="meet-img-wrap fade-up">
+    <img src="insta_2.png" alt="The Div Guy" class="meet-img" />
+  </div>
+  <div class="meet-text fade-up">
+    <div class="sec-label">// the character</div>
+    <h2 class="sec-title">Meet The<br><span style="color:var(--green)">Div Guy.</span></h2>
+    <p class="meet-desc">
+      He codes. He teaches. He never speaks — but his
+      <strong>speech bubbles say everything.</strong><br><br>
+      Every episode is an interactive webpage you can
+      <strong>click through, explore and learn from</strong> —
+      no voice, no boring slides. Just The Div Guy and his keyboard. 😎
+    </p>
+    <div class="meet-stats">
+      <div><span class="meet-stat-num" data-target="100">0</span><span class="meet-stat-label">Episodes Planned</span></div>
+      <div><span class="meet-stat-num" data-target="100">0</span><span class="meet-stat-label">% Free</span></div>
+      <div><span class="meet-stat-num" data-target="0">0</span><span class="meet-stat-label">Boring Lectures</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
   <div class="cta-glow"></div>
-  <div class="section-tag">// let's go</div>
-  <h2>Ready to Start?</h2>
-  <p>No sign-up. No paywall. Just The Div Guy and your browser.</p>
-  <a href="#topics" class="btn-primary">Pick Your First Topic →</a>
+  <div class="sec-label">// start here</div>
+  <h2 class="sec-title">Watch Episode 01.</h2>
+  <p>The Div Guy just dropped his first post. Go say hi — it's only right. 👋</p>
+  <a href="divguy-intro.html" class="btn-main">▶ Watch Now — It's Free</a>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">&lt;DivGuy /&gt;</div>
-  <div class="footer-copy">© 2025 The Div Guy · Learn to Code, The Cool Way</div>
+  <div class="footer-logo">&lt;TheDivGuy&gt;</div>
+  <div class="footer-note">© 2025 The Div Guy · Build Cool Stuff · 100 Episodes Coming</div>
 </footer>
 
 <script>
-// Custom cursor
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = mx - 6 + 'px';
-  cursor.style.top  = my - 6 + 'px';
-});
-function animRing() {
-  rx += (mx - rx - 18) * 0.12;
-  ry += (my - ry - 18) * 0.12;
-  ring.style.left = rx + 'px';
-  ring.style.top  = ry + 'px';
-  requestAnimationFrame(animRing);
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+function countUp(el, target, dur=1400) {
+  let s=0, step=target/(dur/16);
+  const t=setInterval(()=>{
+    s+=step;
+    if(s>=target){el.textContent=target;clearInterval(t);return;}
+    el.textContent=Math.floor(s);
+  },16);
 }
-animRing();
-
-// Speech bubble messages cycling
-const messages = [
-  `Hey! I'm <span class="highlight">The Div Guy</span>.<br>Let's learn to code! 🚀<span class="bubble-cursor"></span>`,
-  `<span class="code-inline">&lt;div&gt;</span> is literally<br>the most important<br>HTML tag. Trust me. 😎<span class="bubble-cursor"></span>`,
-  `CSS is not scary.<br>It's just <span class="highlight">art</span><br>for nerds. 🎨<span class="bubble-cursor"></span>`,
-  `Pick a topic below<br>and I'll break it<br>down for you! 👇<span class="bubble-cursor"></span>`,
-];
-let msgIdx = 0;
-const bubbleText = document.getElementById('bubbleText');
-const bubble = document.getElementById('bubble');
-
-function cycleBubble() {
-  bubble.style.animation = 'none';
-  bubble.style.opacity = '0';
-  bubble.style.transform = 'scale(0.85)';
-  setTimeout(() => {
-    msgIdx = (msgIdx + 1) % messages.length;
-    bubbleText.innerHTML = messages[msgIdx];
-    bubble.style.transition = 'opacity 0.3s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1)';
-    bubble.style.opacity = '1';
-    bubble.style.transform = 'scale(1)';
-  }, 300);
-}
-setInterval(cycleBubble, 3500);
-
-// Scroll-triggered fade-ups
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.15 });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// Count-up for stats
-function countUp(el, target, duration = 1200) {
-  let start = 0;
-  const step = target / (duration / 16);
-  const timer = setInterval(() => {
-    start += step;
-    if (start >= target) { el.textContent = target; clearInterval(timer); return; }
-    el.textContent = Math.floor(start);
-  }, 16);
-}
-const statObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const target = +e.target.dataset.target;
-      if (!isNaN(target)) countUp(e.target, target);
-      statObserver.unobserve(e.target);
-    }
+const so = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ countUp(e.target,+e.target.dataset.target); so.unobserve(e.target); }
   });
-}, { threshold: 0.5 });
-document.querySelectorAll('[data-target]').forEach(el => statObserver.observe(el));
+},{threshold:0.5});
+document.querySelectorAll('[data-target]').forEach(el=>so.observe(el));
 </script>
 </body>
 </html>
