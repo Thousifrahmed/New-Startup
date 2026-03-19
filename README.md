@@ -47,7 +47,7 @@ This repo is **actively maintained** and will grow as I continue my learning jou
 
 ## 🤝 Connect With Me
 - 📧 Email: thousifrahmed@gmail.com
-- 🔗 GitHub: https://github.com/<your-username>
+- 🔗 GitHub: https://github.com/Thousifrahmed
 
 ---
 
